@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+.navbar-container {
+  margin-left: 135px;
+  margin-right: 135px;
+  margin-bottom: 16px;
+  margin-top: 40px;
+  width: auto;
+
+  background-color: black;
+}
+
+.Exclusive-text {
+  color: var(--Text2, #000);
+
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px; 
+letter-spacing: 0.72px;
+}
