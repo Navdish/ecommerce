@@ -41,7 +41,7 @@ function ResponsiveAppBar() {
       <Container id="nav-container" maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
-          className='Exclusive-text'
+            id='Exclusive-text'
             variant="h6"
             noWrap
             component="a"
@@ -66,7 +66,8 @@ function ResponsiveAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="black"
+              border="none"
             >
               <MenuIcon />
             </IconButton>
@@ -96,6 +97,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           <Typography
+            id='Exclusive-text-s'
             variant="h5"
             noWrap
             component="a"
@@ -116,11 +118,12 @@ function ResponsiveAppBar() {
           <Box className="navbar" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
+              
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link to={"/" + page.split(" ").join("")}>{page}</Link>
+                <Link className='nowrap' to={"/" + page.split(" ").join("")}>{page}</Link>
               </Button>
             ))}
           </Box>
@@ -139,19 +142,9 @@ function ResponsiveAppBar() {
             </FormControl>
            </Box>
            <Box>
-            <FormControl  sx={{ m: 1, width: '12ch',
-                                '&:focus': {
-                                    width: '20ch',
-                                }, display: {xs:'flex', md:'none'} }} variant="filled">
-                    <FilledInput
-                        id="filled-adornment-weight"
-                        endAdornment={<InputAdornment position="end"><SearchIcon /></InputAdornment>}
-                        aria-describedby="filled-weight-helper-text"
-                        inputProps={{
-                        'aria-label': 'weight',
-                        }}
-                />
-            </FormControl>
+            <IconButton type="button" sx={{ p: '10px', display: {xs: 'flex'} }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
            </Box>
         </Toolbar>
       </Container>

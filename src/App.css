@@ -1,22 +1,71 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
 
-.navbar-container {
-  margin-left: 135px;
-  margin-right: 135px;
-  margin-bottom: 16px;
-  margin-top: 40px;
-  width: auto;
-
-  background-color: black;
+a {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.Exclusive-text {
-  color: var(--Text2, #000);
+#nav-container {
+  width: auto;
+  padding:0px;
+  background-color: white;
+}
 
-font-family: Inter;
-font-size: 24px;
-font-style: normal;
-font-weight: 700;
-line-height: 24px; 
-letter-spacing: 0.72px;
+#nav-styles {
+  background-color: white;
+  padding-left: 135px;
+  padding-right: 135px;
+  padding-bottom: 16px;
+  padding-top: 40px;
+}
+
+.nowrap {
+  white-space: nowrap ;
+}
+
+.nav-items {
+  color: var(--Text2, #000);
+  text-align: center;
+
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.nav-items:active {
+  text-decoration: underline;
+}
+
+
+#Exclusive-text {
+  color: var(--Text2, #000);
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; 
+  letter-spacing: 0.72px;
+  margin-right: 0px;
+}
+
+#Exclusive-text-s {
+  color: var(--Text2, #000);
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; 
+  letter-spacing: 0.72px;
+}
+
+@media screen and (max-width: 900px) {
+  #nav-styles {
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 16px;
+    padding-top: 40px;
+  }
 }
