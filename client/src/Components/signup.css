@@ -1,3 +1,8 @@
 .signup-box {
     display: flex;
 }
+
+.signup-right-box {
+    align-items: center;
+    justify-content: center;
+}
