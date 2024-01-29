@@ -9,7 +9,7 @@ var jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect("mongodb+srv://navdishjaggi:XUb6oUxcy3sfJRFj@cluster0.ezcelwk.mongodb.net/")
@@ -23,6 +23,7 @@ app.post('/signup', async function(req, res){
   const user_name = req.body.name;
   const user_email = req.body.email;
   const user_password = req.body.password;
+  const user_role = req.body.role;
 
   const user = await users.findOne({email : user_email}).exec();
 
@@ -33,25 +34,23 @@ app.post('/signup', async function(req, res){
   else 
   {
     const hash = await bcrypt.hash(user_password, saltRounds);
-    const new_user = await users.create({email : user_email, password : hash, name : user_name});
+    const new_user = await users.create({email : user_email, password : hash, name : user_name, role : user_role});
     res.status(200);
   }
 })
 
 app.post('/login', async function(req, res){
 
-  const {email, password} = req.body;
+  const {email, password, role} = req.body;
 
   const user = await users.findOne({email: email}).exec();
-  console.log(user);
+  // console.log(user);
   if(user)
   {
     
-    if(bcrypt.compare(password, user.password))
+    if(bcrypt.compare(password, user.password)  && (role === user.role))
     {
-      console.log(user);
-      console.log("chala ja bhai")
-      return res.status(200).json({user });;
+      return res.status(200).json({user });
     }
   }
   return res.status(400).json({message :'No user found with such credentials'});

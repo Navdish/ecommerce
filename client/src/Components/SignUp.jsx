@@ -8,6 +8,7 @@ import React from 'react';
 import {useState} from 'react';
 import signimage from '../assets/signup.png';
 import validator from 'validator';
+import SelectVariants from './select.jsx'
 
 
 function SignUp() {
@@ -15,25 +16,27 @@ function SignUp() {
     const obj ={
         name : "",
         email : "",
-        password : ""
+        password : "",
+        role: ""
     }
     console.log("3");
     const [pass_error, setPass_error] = useState("");
     const [email_error, setEmail_error] = useState("");
     const [email_status, setEmail_status] = useState(false);
     const [pass_status, setPass_status] = useState(false);
+    const [role, setRole] = useState("");
     const[form, setForm] = useState(obj);
     const signup = async(form) => await  axios.post('http://localhost:8080/signup', form);
     const navigate = useNavigate();
     async function handlesubmit(e){
         e.preventDefault();
-        
+        form.role = role;
         console.log("waiting for response");
         if(email_status && pass_status)
         {
             console.log("sjxnak");
             try {
-                await signup(form);
+                 signup(form);
                 
                 navigate('/');
             }
@@ -101,6 +104,7 @@ function SignUp() {
                     <label for='email'>{email_error}</label>
                     <input className='form-content' id='password' type="text" placeholder='Password' onChange={(e)=>handlepassword(e)} required />
                     <label for='password'>{pass_error}</label>
+                    <SelectVariants role={role} setRole ={setRole}/>
                     <button className='form-btn-submit' type='submit'  >Create Account</button>
                     <button className='Google-sign-btn'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                         <g clipPath="url(#clip0_918_3336)">

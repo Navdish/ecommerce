@@ -6,13 +6,16 @@ import ResponsiveAppBar from './Navbar';
 import axios from 'axios';
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import SelectVariants from './select.jsx'
 
 
 function Login() {
-
+    
+    const [role, setRole] = useState("");
     const obj ={
         email : "",
-        password : ""
+        password : "", 
+        role : ""
     }
     const[form, setForm] = useState(obj);
     const navigate = useNavigate();
@@ -26,7 +29,7 @@ function Login() {
     }
     async function handlesubmit(e){
         e.preventDefault();
-        
+        form.role = role;
         console.log(form);
         console.log("waiting for response");
     
@@ -53,6 +56,7 @@ function Login() {
                     <Box className='form-subheading'>Enter your details below</Box>
                     <input className='form-content' type="text" placeholder='Email or Phone Number' onChange={(e)=>handleemail(e)}/>
                     <input className='form-content' type="text" placeholder='Password' onChange={(e)=>handlepassword(e)} />
+                    <SelectVariants role={role} setRole= {setRole}/>
                     <Box className='Log-buttons'>
                         <button className='login-btn' type='submit' onClick={(e)=>handlesubmit(e)}>Log in</button>
                         <Link className='forgot' to="/">Forgot password</Link>

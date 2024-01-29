@@ -8,7 +8,7 @@ a {
 }
 
 #nav-container {
-  width: auto;
+  width: 100%;
   padding:0px;
   background-color: white;
   display: flex;
@@ -67,6 +67,11 @@ a {
 .search-box {
   width: 243px;
   margin-right: 24px;
+}
+
+.right-item {
+  display: flex;
+  align-items: center;
 }
 
 
@@ -243,7 +248,10 @@ a {
   line-height: 24px; /* 150% */
 }
 
-
+.navbar>button {
+  padding-left: 24px;
+  padding-right: 24px;
+}
 
 @media screen and (max-width: 899px) {
   #nav-styles {
