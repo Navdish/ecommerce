@@ -36,9 +36,8 @@ function SignUp() {
         {
             console.log("sjxnak");
             try {
-                 signup(form);
-                
-                navigate('/');
+                signup(form);
+                navigate('/Login');
             }
             catch(error) {
                 alert("Email already exists.")

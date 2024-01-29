@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import SelectVariants from './select.jsx'
 
 
-function Login() {
+function Login({user_id, setUser_id}) {
     
     const [role, setRole] = useState("");
     const obj ={
@@ -37,8 +37,16 @@ function Login() {
             console.log("inside try")
             const response = await Login(form);
             console.log(response);
-            
-            navigate('/');
+            setUser_id(response.data.user._id);
+            console.log("Login ")
+            if(response.data.user.role === 'admin')
+            {
+                navigate('/Admin_home');
+            }
+            else
+            {
+                navigate('/');
+            }
         }
         catch(error) {
             alert("Invalid Credentials");

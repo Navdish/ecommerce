@@ -253,6 +253,14 @@ a {
   padding-right: 24px;
 }
 
+.post-form {
+  display: flex;
+  flex-direction: column;
+  /* width: 50%; */
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 899px) {
   #nav-styles {
     background-color: white;
