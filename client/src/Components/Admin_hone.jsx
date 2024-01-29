@@ -1,5 +1,5 @@
 import '../App.css'
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import axios from 'axios'
 // import ResponsiveAppBar from './Navbar.jsx'
 
@@ -14,29 +14,22 @@ function AdminHome({user_id}) {
         description : String,
         retailer_id : user_id
     }
-    const[admin_products, setAdmin_products] = useState([]);
     const[form, setForm] = useState(obj);
-    // const [flag, setFlag]  = useState(false);
-    // useEffect(()=>{
-    //     const fetch_posts = async() => await get_products({user_id});
-    //     setAdmin_products(fetch_posts);
-    //     console.log(admin_products);
-    //     setFlag(true);
-    // }, [])
 
     function handlechange(e){
         setForm({...form, [e.target.name] : e.target.value});
     }
     const add_product = async(form) => axios.post('http://localhost:8080/add_product', form);
     const get_products = async(data)=> axios.post('http://localhost:8080/get_products', data);
-    
+    const admin_products = get_products({user_id});
     async function handleClick(e) {
+        e.preventDefault();
         console.log(form);
         const response = await add_product(form);
     }
     return (
         <>
-            <form className='post-form' enCtype="multipart/form-data">
+            <form className='post-form' encType="multipart/form-data">
                 <h1>Admin Home page</h1>
                 <input type="text" placeholder='name' name="name" onChange={(e)=>handlechange(e)}/>
                 <input type="file" placeholder="image " name="uploaded_file" onChange={(e)=>handlechange(e)}/>
@@ -49,9 +42,7 @@ function AdminHome({user_id}) {
             </form>
 
             <ul>
-                {/* { flag && admin_products.map((x)=> {
-                    return <li>{x.name}</li>
-                })} */}
+
             </ul>
         </>
     )
