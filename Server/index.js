@@ -24,9 +24,9 @@ app.post('/signup', async function(req, res){
   const user_email = req.body.email;
   const user_password = req.body.password;
 
-  const emails = await users.findOne({email : user_email}).exec();
+  const user = await users.findOne({email : user_email}).exec();
 
-  if(emails)
+  if(user)
   {
     return res.status(400).json({message :'something went wrong'});
   }
@@ -34,9 +34,28 @@ app.post('/signup', async function(req, res){
   {
     const hash = await bcrypt.hash(user_password, saltRounds);
     const new_user = await users.create({email : user_email, password : hash, name : user_name});
-    // const token = jwt.sign({email : user_email, id: new_user.id }, 'secret', {expiresIn: "1h"});
     res.status(200);
   }
+})
+
+app.post('/login', async function(req, res){
+
+  const {email, password} = req.body;
+
+  const user = await users.findOne({email: email}).exec();
+  console.log(user);
+  if(user)
+  {
+    
+    if(bcrypt.compare(password, user.password))
+    {
+      console.log(user);
+      console.log("chala ja bhai")
+      return res.status(200).json({user });;
+    }
+  }
+  return res.status(400).json({message :'No user found with such credentials'});
+  
 })
 
 app.listen(8080, function() {

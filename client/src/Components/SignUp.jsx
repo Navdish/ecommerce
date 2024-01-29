@@ -13,13 +13,13 @@ import validator from 'validator';
 function SignUp() {
 
     const obj ={
-        name : String,
-        email : String,
-        password : String
+        name : "",
+        email : "",
+        password : ""
     }
-    // const [password, setPassword] = useState("");
-    // const [email, setEmail] = useState("");
-    const [passerror, setPasserror] = useState("");
+    console.log("3");
+    const [pass_error, setPass_error] = useState("");
+    const [email_error, setEmail_error] = useState("");
     const [email_status, setEmail_status] = useState(false);
     const [pass_status, setPass_status] = useState(false);
     const[form, setForm] = useState(obj);
@@ -31,9 +31,10 @@ function SignUp() {
         console.log("waiting for response");
         if(email_status && pass_status)
         {
+            console.log("sjxnak");
             try {
-                const response = await signup(form);
-                console.log(response);
+                await signup(form);
+                
                 navigate('/');
             }
             catch(error) {
@@ -42,61 +43,65 @@ function SignUp() {
             }
         }
         else {
-
+            console.log("xnak");
+            console.log(pass_status, email_status);
+            pass_status&&setEmail_error("Email is not correct.");
+            email_status&&setPass_error("Weak Password.");
         }
         
     }
 
     function handlename(e){
-        setForm({...form, [form.name] : e.target.value});
+        setForm({...form, name : e.target.value});
     }
 
     function handlepassword(e) {
-        setForm({...form, [form.password] : e.target.value});
+        console.log("1");
+        setForm({...form, password : e.target.value});
+        console.log("2");
         if(validator.isStrongPassword(form.password, {
             minLength: 8, minLowercase : 1, minUppercase : 1, minSymbols : 1, maxLength : 50, minNumbers : 1
         })){
-            setPasserror("Strong Password");
+            setPass_error("");
             setPass_status(true);
         }
         else {
-            setPasserror("Weak Password");
+            setPass_error("Weak Password");
             setPass_status(false);
         }
     }
 
     function handleemail(e) {
-        setForm({...form, [form.email] : e.target.value});
+        setForm({...form, email : e.target.value});
+
         if(validator.isEmail(form.email))
         {
             setEmail_status(true);
+            setEmail_error("");
         }
         else
         {
             setEmail_status(false);
+            setEmail_error("Not a genuine email");
         }
     }
-    // var btn = document.getElementsByClassName("form-btn-submit")[0];
-    // if(email_status && pass_status === false)
-    // {
-    //     btn.ariaDisabled = true;
-    // }
-    // else {
-    //     btn.ariaDisabled = false;
-    // }
+    
     return (
     <Box>   
         <ResponsiveAppBar />
         <Box className='signup-box'>
             <img className='sign-image' src={signimage} alt=''></img>
             <Box className='form-box'>
-                <form className='sign-form' method="post" >
+                <form className='sign-form' method="post" onSubmit={(e)=>handlesubmit(e)}>
                     <Box className='form-heading'>Create an account</Box>
                     <Box className='form-subheading'>Enter your details below</Box>
-                    <input className='form-content' name='name' type="text" placeholder='Name' onChange={(e)=>handlename(e)} />
-                    <input className='form-content' name='email' type="text" placeholder='Email or Phone Number' onChange={(e)=>handleemail(e)}/>
-                    <input className='form-content' name='password' type="text" placeholder='Password' onChange={(e)=>handlepassword(e)} />
-                    <button className='form-btn-submit' type='submit' onClick={(e)=>handlesubmit(e)} ariaDisabled = 'false'>Create Account</button>
+                    <input className='form-content' name='name' type="text" placeholder='Name' onChange={(e)=>handlename(e)} required />
+                    
+                    <input className='form-content' id='email' type="text" placeholder='Email or Phone Number' onChange={(e)=>handleemail(e)} required/>
+                    <label for='email'>{email_error}</label>
+                    <input className='form-content' id='password' type="text" placeholder='Password' onChange={(e)=>handlepassword(e)} required />
+                    <label for='password'>{pass_error}</label>
+                    <button className='form-btn-submit' type='submit'  >Create Account</button>
                     <button className='Google-sign-btn'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                         <g clipPath="url(#clip0_918_3336)">
                             <path d="M23.766 12.7764C23.766 11.9607 23.6999 11.1406 23.5588 10.3381H12.24V14.9591H18.7217C18.4528 16.4494 17.5885 17.7678 16.323 18.6056V21.6039H20.19C22.4608 19.5139 23.766 16.4274 23.766 12.7764Z" fill="#4285F4"/>
