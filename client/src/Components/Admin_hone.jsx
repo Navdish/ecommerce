@@ -1,5 +1,5 @@
 import '../App.css'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios'
 // import ResponsiveAppBar from './Navbar.jsx'
 
@@ -15,13 +15,28 @@ function AdminHome({user_id}) {
         retailer_id : user_id
     }
     const[form, setForm] = useState(obj);
-
+    const [post_data, setPost_data] = useState([]);
+    useEffect(()=>{
+        async function Posts(){
+            const admin_products = await get_products({user_id});
+            const data_products = admin_products.data;
+            setPost_data(data_products);
+            //console.log(data_products);
+            console.log(post_data);
+        }
+        Posts();
+    }, []);
     function handlechange(e){
         setForm({...form, [e.target.name] : e.target.value});
     }
     const add_product = async(form) => axios.post('http://localhost:8080/add_product', form);
-    const get_products = async(data)=> axios.post('http://localhost:8080/get_products', data);
-    const admin_products = get_products({user_id});
+    const get_products = async(data)=> axios.get('http://localhost:8080/get_products', {
+        params : {
+            ID : data
+        }
+    });
+    
+    
     async function handleClick(e) {
         e.preventDefault();
         console.log(form);
@@ -42,7 +57,11 @@ function AdminHome({user_id}) {
             </form>
 
             <ul>
-
+                {post_data.length !== 0&&post_data.map((x, _id)=> {
+                    return (
+                        <li>{x.name}</li>
+                    )
+                })}
             </ul>
         </>
     )
