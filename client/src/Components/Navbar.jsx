@@ -15,7 +15,9 @@ import '../App.css';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import FilledInput from '@mui/material/FilledInput';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
+import './Navbar.css'
 
 
 
@@ -23,7 +25,7 @@ const pages = ['Home', 'Contact', 'About', 'Sign Up'];
 
 
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({role, setRole}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -33,6 +35,10 @@ function ResponsiveAppBar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  function handleAccount(e){
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
 
 
   return (
@@ -141,7 +147,7 @@ function ResponsiveAppBar() {
                   />
               </FormControl>
             </Box>
-            <Box className='icons'>
+            <Box className='icons' sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <IconButton type="button" sx={{ p: '10px', display: {xs: 'flex', md: 'none'} }} aria-label="search">
                   <SearchIcon />
                 </IconButton>
@@ -154,6 +160,19 @@ function ResponsiveAppBar() {
                     <path d="M3 5H7L10 22H26" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M10 16.6667H25.59C25.7056 16.6667 25.8177 16.6267 25.9072 16.5535C25.9966 16.4802 26.0579 16.3782 26.0806 16.2648L27.8806 7.26479C27.8951 7.19222 27.8934 7.11733 27.8755 7.04552C27.8575 6.97371 27.8239 6.90678 27.7769 6.84956C27.73 6.79234 27.6709 6.74625 27.604 6.71462C27.5371 6.68299 27.464 6.66661 27.39 6.66666H8" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
+                <div className='account-dropdown'>
+                  <PersonRoundedIcon onClick={(e)=> handleAccount(e)} sx={{ fill:'black', width:'20px', height:'24px'}}/>
+                  <div id="myDropdown" className="dropdown-content">
+                    <a href="">Manage my account</a>
+                    {role==='admin' &&
+                      <Link to = '/Admin_home'>Dashboard</Link>
+                    }
+                    <a href="">My order</a>
+                    <a href="">My cancellation</a>
+                    <a href="">My reviews</a>
+                    <a href="">Logout</a>
+                  </div>
+                </div>
             </Box>
            </Box>
         </Toolbar>

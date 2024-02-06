@@ -3,25 +3,24 @@ import {useState, useEffect} from 'react';
 import axios from 'axios'
 // import ResponsiveAppBar from './Navbar.jsx'
 
-function AdminHome({user_id}) {
-    const obj = {
-        name : String,
-        images : String,
-        price : Number,
-        quantity : Number,
-        colors : String,
-        rating : Number,
-        description : String,
-        retailer_id : user_id
-    }
-    const[form, setForm] = useState(obj);
+function AdminHome() {
+    // const obj = {
+    //     name : String,
+    //     images : String,
+    //     price : Number,
+    //     quantity : Number,
+    //     colors : String,
+    //     rating : Number,
+    //     description : String,
+    //     retailer_id : user_id
+    // }
+    const[form, setForm] = useState();
     const [post_data, setPost_data] = useState([]);
     useEffect(()=>{
         async function Posts(){
-            const admin_products = await get_products({user_id});
+            const admin_products = await get_products();
             const data_products = admin_products.data;
             setPost_data(data_products);
-            //console.log(data_products);
             console.log(post_data);
         }
         Posts();

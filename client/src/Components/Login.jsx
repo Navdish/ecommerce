@@ -7,10 +7,11 @@ import axios from 'axios';
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import SelectVariants from './select.jsx'
+import Cookies from 'js-cookie';
 
 
-function Login({user_id, setUser_id}) {
-    
+function Login() {
+    axios.defaults.headers.common['jwt-token'] = Cookies.get('token');
     const [role, setRole] = useState("");
     const obj ={
         email : "",
@@ -37,16 +38,18 @@ function Login({user_id, setUser_id}) {
             console.log("inside try")
             const response = await Login(form);
             console.log(response);
-            setUser_id(response.data.user._id);
             console.log("Login ")
-            if(response.data.user.role === 'admin')
-            {
-                navigate('/Admin_home');
-            }
-            else
-            {
-                navigate('/');
-            }
+            Cookies.set('token', response.data, { expires: 7, secure: true });
+            // if(response.data.user.role === 'admin')
+            // {
+            //     navigate('/Admin_home');
+            // }
+            // else
+            // {
+            //     navigate('/');
+            // }
+
+            navigate('/');
         }
         catch(error) {
             alert("Invalid Credentials");
@@ -64,7 +67,7 @@ function Login({user_id, setUser_id}) {
                     <Box className='form-subheading'>Enter your details below</Box>
                     <input className='form-content' type="text" placeholder='Email or Phone Number' onChange={(e)=>handleemail(e)}/>
                     <input className='form-content' type="text" placeholder='Password' onChange={(e)=>handlepassword(e)} />
-                    <SelectVariants role={role} setRole= {setRole}/>
+                    <SelectVariants role={role} setRole={setRole}/>
                     <Box className='Log-buttons'>
                         <button className='login-btn' type='submit' onClick={(e)=>handlesubmit(e)}>Log in</button>
                         <Link className='forgot' to="/">Forgot password</Link>
