@@ -2,6 +2,7 @@ const service = require('../services');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken')
+const Products = require('../models/product')
 
 const fetch_user = async function(req, res){
     console.log("jwt details",req.res.user);
@@ -53,25 +54,18 @@ const login = async function(req, res){
 
 const add_product = async function(req, res){
     console.log("add_product");
-    const {name, images, price, quantity, colors, rating, description, retailer_id} = req.body;
-    // const response = await Products.create({name: name, images: images, price : price, quantity: quantity, colors: colors, rating: rating, description: description, retailer_id : retailer_id})
+    const {name, images, price, quantity, colors, rating, description} = req.body;
+    const retailer_id = req.res.user.id;
     const response = await service.userService.add_product(name, images, price, quantity, colors, rating, description, retailer_id);
     console.log(response);
-    // add the product id to the admin cart
-    // const admin = await Users.findById(retailer_id).exec();
-    // admin.cart = [...admin.cart , response._id];
-    // admin.save();
     res.status(200);
 }
 
 const fetch_products = async function(req, res){
     console.log("get products");
-    const admin = req.body;
-    console.log(admin); // _id of admin
-    // const posts = await Products.find({retailer_id : req}).exec();
-    // console.log(posts);
-  
-    const posts = await Products.find({retailer_id : admin.user_id}).exec();
+    const admin = req.res.user.id;
+    console.log(admin); 
+    const posts = await Products.find({retailer_id : admin}).exec();
     console.log(posts);
     res.status(200).json(posts);
   }

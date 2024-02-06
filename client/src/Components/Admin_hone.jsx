@@ -1,9 +1,13 @@
 import '../App.css'
 import {useState, useEffect} from 'react';
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts , addProduct} from '../Store/Slices/productSlice';
+import Cookies from 'js-cookie';
 // import ResponsiveAppBar from './Navbar.jsx'
 
 function AdminHome() {
+    axios.defaults.headers.common['jwt-token'] = Cookies.get('token');
     // const obj = {
     //     name : String,
     //     images : String,
@@ -14,32 +18,36 @@ function AdminHome() {
     //     description : String,
     //     retailer_id : user_id
     // }
+    const dispatch = useDispatch();
+    
+    const data = useSelector((state)=> state.data);
+    useEffect(()=> {
+            dispatch(fetchProducts());
+            console.log("...");
+    },[])
+
+    console.log("data",data);
+
+
+
+
     const[form, setForm] = useState();
-    const [post_data, setPost_data] = useState([]);
-    useEffect(()=>{
-        async function Posts(){
-            const admin_products = await get_products();
-            const data_products = admin_products.data;
-            setPost_data(data_products);
-            console.log(post_data);
-        }
-        Posts();
-    }, []);
+    
     function handlechange(e){
         setForm({...form, [e.target.name] : e.target.value});
     }
-    const add_product = async(form) => axios.post('http://localhost:8080/add_product', form);
-    const get_products = async(data)=> axios.get('http://localhost:8080/get_products', {
-        params : {
-            ID : data
-        }
-    });
+    // const add_product = async(form) => axios.post('http://localhost:8080/add_product', form);
+    // const get_products = async(data)=> axios.get('http://localhost:8080/get_products', {
+    //     params : {
+    //         ID : data
+    //     }
+    // });
     
     
     async function handleClick(e) {
         e.preventDefault();
         console.log(form);
-        const response = await add_product(form);
+        dispatch(addProduct(form));
     }
     return (
         <>
@@ -56,11 +64,7 @@ function AdminHome() {
             </form>
 
             <ul>
-                {post_data.length !== 0&&post_data.map((x, _id)=> {
-                    return (
-                        <li>{x.name}</li>
-                    )
-                })}
+
             </ul>
         </>
     )

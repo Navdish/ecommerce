@@ -31,11 +31,11 @@ function authenticateUser(req, res, next) {
 module.exports = router;
 
 router.get('/fetch_user', authenticateUser, userController.fetch_user );
-router.get('/fetch_products', userController.fetch_products);
+router.get('/fetch_products', authenticateUser, userController.fetch_products);
 
 router.post('/signup', userController.signup);
 router.post('/login', userController.login);
-router.post('/add_product', upload.single('avatar'), userController.add_product);
+router.post('/add_product',authenticateUser, upload.single('avatar'), userController.add_product);
 
 // router.get('/fetch_user',authenticateUser, async function(req, res){
 //    console.log(req.user);

@@ -4,12 +4,12 @@ import Home from './Components/Home.jsx'
 import SignUp from './Components/SignUp.jsx'
 import Login from './Components/Login.jsx'
 import AdminHome from './Components/Admin_hone.jsx'
-// import react from 'react';
-import {useState} from 'react'
+
 
 function App() {
   return (
     <div>
+
       <BrowserRouter>
       
         <Routes>
